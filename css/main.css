@@ -2,6 +2,7 @@ html, body {
     margin: 0px;
     padding: 0px;
     font-family: 'Raleway', sans-serif;
+    scroll-behavior: smooth;
 }
 
 /* 
@@ -30,20 +31,22 @@ header {
 
 nav {
     width: 100%;
-    position: sticky;
+    background-color: #BBD1EA;
+    position: fixed;
 }
 
 nav ul {
     list-style-type: none;
     display: flex;
     justify-content: center;
-    padding: 10px;
+    padding: 20px;
+    margin: 0px;
 }
 
 nav ul li {
     padding-bottom: 5px;
     margin-right: 15px;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid transparent;
     transition: border-color .6s ease;
     font-size: 1.2em;
 }
@@ -62,3 +65,10 @@ nav ul li:hover {
     font-weight: bolder;
 }
 
+main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
