@@ -17,7 +17,7 @@ html, body {
 
 header {
     width: 100%;
-    height: 70vh;
+    height: 100vh;
     min-height: 700px;
     background-color: #507DBC;
     display: flex;
@@ -30,6 +30,7 @@ header {
 }
 
 nav {
+    z-index: 100;
     width: 100%;
     background-color: #BBD1EA;
     position: fixed;
@@ -67,8 +68,91 @@ nav ul li:hover {
 
 main {
     width: 100%;
+}
+
+#titleProject h1 {
+    text-align: center;
+    font-size: 4em;
+    margin-top: 0px;
+}
+
+#wrapProjects {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.project-card {
+    min-width: 400px;
+    width: 30%;
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 1500px) {
+    .project-card:not(:first-child) {
+        margin-top: 20px;
+    }
+    .project-card {
+        width: 70%;
+    }
+} 
+
+@media (max-width: 1000px) {
+    .project-card {
+        width: 95%;
+    }
+}
+
+.project-card img {
+    width: 100%;
+    height: auto;
+    transition: transform .5s, filter .5s ease-in-out;
+    filter: grayscale(0);
+    object-fit: cover;
+}
+
+.project-card img:hover {
+    filter: grayscale(100%);
+    transform: scale(1.1);
+}
+
+.description {
+    pointer-events: none;
+    transition: opacity .4s ease;
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
+    background-color: #507DBC;
+    color: white;
+    padding: 10px;
+}
+
+.description h1 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.description p {
+    word-break: normal;
+}
+
+.description a {
+    text-decoration: none;
+    color: white;
+    pointer-events: all;
+    padding: 10px;
+    background-color: #04080F;
+}
+
+.project-card:hover .description {
+    opacity: 1;
 }
