@@ -6,7 +6,7 @@ const proyects = [
         imagePath: '../imgs/pintorrea.PNG'
     },
     {
-        name: 'Maze Pathfinding',
+        name: 'Pathfinding',
         description: 'A pathfinding algorithm that search the best route between 2 points (Dijkstra).',
         url: 'https://maze-pathfinding.herokuapp.com/',
         imagePath: '../imgs/pathfinding.PNG'

@@ -103,6 +103,10 @@ main {
 @media (max-width: 1000px) {
     .project-card {
         width: 95%;
+        font-size: 15px;
+    }
+    .project-card h1 {
+        font-size: 29px;
     }
 }
 
