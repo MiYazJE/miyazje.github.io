@@ -13,7 +13,7 @@ const proyects = [
     },
     {
         name: 'PokeReactive',
-        description: 'PokeReactive is a website for search any pokemon, it uses a public api.',
+        description: 'PokeReactive is a website for searching any pokemon, it uses a public api.',
         url: 'https://pokereactive.herokuapp.com/',
         imagePath: '../imgs/pokeReactive.PNG'
     },

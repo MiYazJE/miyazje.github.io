@@ -7,25 +7,53 @@
         <link rel="stylesheet" href="css/main.css" />
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet" />
         <script type="module" defer src="./js/main.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
     </head>
     <body>
         <nav>
-            <ul>
-                <li class="default"><a class="navLink" href="#">Who am I?</a></li>
-                <li><a class="navLink" href="#projects">Projects</a></li>
-                <li><a class="navLink" href="#">Contact</a></li>
+            <ul id="whoAmI">
+                <li class="linkSelected default whoAmILi"><a class="navLink" href="#">Who am I?</a></li>
+                <li class="projectsLi"><a class="navLink" href="#projects">Projects</a></li>
+                <li class="contactLi"><a class="navLink" href="#contact">Contact</a></li>
             </ul>
         </nav>
         <header>
             <div class="presentation-wrap">
                 <h1>Hello, I'm Rubén.</h1>
                 <h1>Web developer.</h1>
+                <a href="#projects">
+                    <div class="viewProjects">
+                        <span>View projects</span>
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                </a>
             </div>
         </header>
-        <div id="projects" style="margin-bottom: 60px;"></div>
         <main>
-            <div id="titleProject"><h1>Projects</h1></div>
-            <div id="wrapProjects"></div>
+            <div id="projects" class="projectsMargin"></div>
+            <div class="titleProject">
+                <h1>Projects</h1>
+                <div id="wrapProjects"></div>
+            </div>
+            <div id="contact">
+                <h1>Contact me</h1>
+                <form action="mailto:ruben.saizserrano@gmail.com" method="post" enctype="text/plain">
+                    <div class="form-input">
+                        <p>Name</p>
+                        <input type="text" name="name" required />
+                    </div>
+                    <div class="form-input">
+                        <p>Email</p>
+                        <input type="text" name="email" required />
+                    </div>
+                    <div class="form-input">
+                        <p>Message</p>
+                        <textarea></textarea>
+                    </div>
+                    <input type="submit" value="Send message" />
+                </form>
+            </div>
         </main>
         <footer></footer>
     </body>
