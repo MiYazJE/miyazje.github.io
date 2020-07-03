@@ -13,8 +13,9 @@ import { proyects } from './proyects.js';
 
     function replenishProyects() {
         const wrapProyects = document.querySelector('#wrapProjects');
+        let delay = 0.2;
         wrapProyects.innerHTML = proyects.map((proyect) => `
-            <div class="project-card">
+            <div class="project-card" data-delay="${delay += 0.1}">
                 <img src="${proyect.imagePath}" />
                 <div class="description">
                     <h1>${proyect.name}</h1>
@@ -66,6 +67,25 @@ import { proyects } from './proyects.js';
     function main() {
         replenishProyects();
         startScrollElements();
+
+        ScrollOut({ 
+            targets: '.transition-text, .project-card',
+            onShown: (el) => {
+                el.classList.add('animate__animated');
+                if (el.classList.contains('transition-text')) {
+                    el.classList.add('animate__backInRight');
+                }
+                else if (el.classList.contains('project-card')) {
+                    el.style.animationDelay = `${el.dataset.delay}s`;
+                    el.classList.add('animate__fadeIn');
+                }
+                el.addEventListener('animationend', () => {
+                    el.classList.remove('animate__fadeIn');
+                    el.classList.remove('animate__animated');
+                    el.classList.remove('animate__backInRight');
+                });
+            }
+        });
     }
 
     main();

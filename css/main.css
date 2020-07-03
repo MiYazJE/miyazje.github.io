@@ -3,6 +3,7 @@ html, body {
     padding: 0px;
     font-family: 'Raleway', sans-serif;
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 /* 
@@ -23,6 +24,10 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.transition-text {
+    animation-delay: .2s;
 }
 
 .viewProjects {
