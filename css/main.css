@@ -105,26 +105,31 @@ main {
 
 #wrapProjects {
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    flex-wrap: wrap;
+    justify-items: center;
+    grid-gap: 5px;
 }
 
 .project-card {
     min-width: 400px;
-    width: 30%;
+    width: 90%;
     position: relative;
     overflow: hidden;
+    animation-delay: .5s;
 }
 
 @media (max-width: 1500px) {
-    .project-card:not(:first-child) {
+    #wrapProjects {
+        grid-template-columns: 1fr;
+    }
+    /* .project-card:not(:first-child) {
         margin-top: 20px;
     }
     .project-card {
         width: 70%;
-    }
+    } */
 } 
 
 @media (max-width: 1000px) {

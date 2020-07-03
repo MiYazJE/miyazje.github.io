@@ -79,11 +79,6 @@ import { proyects } from './proyects.js';
                     el.style.animationDelay = `${el.dataset.delay}s`;
                     el.classList.add('animate__fadeIn');
                 }
-                el.addEventListener('animationend', () => {
-                    el.classList.remove('animate__fadeIn');
-                    el.classList.remove('animate__animated');
-                    el.classList.remove('animate__backInRight');
-                });
             }
         });
     }
