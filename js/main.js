@@ -73,6 +73,7 @@ import { proyects } from './proyects.js';
             targets: '.transition-text, .project-card, #portfolio, .viewProjects',
             onShown: (el) => {
                 el.classList.add('animate__animated');
+                el.style.opacity = 1;
                 el.style.animationDelay = `${el.dataset.delay}s`;
                 if (el.classList.contains('project-card')) {
                     el.classList.add('animate__fadeIn');
