@@ -65,19 +65,21 @@ import { proyects } from './proyects.js';
     }
 
     function main() {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
         replenishProyects();
         startScrollElements();
 
         ScrollOut({ 
-            targets: '.transition-text, .project-card',
+            targets: '.transition-text, .project-card, #portfolio, .viewProjects',
             onShown: (el) => {
                 el.classList.add('animate__animated');
-                if (el.classList.contains('transition-text')) {
-                    el.classList.add('animate__backInRight');
-                }
-                else if (el.classList.contains('project-card')) {
-                    el.style.animationDelay = `${el.dataset.delay}s`;
+                el.style.animationDelay = `${el.dataset.delay}s`;
+                if (el.classList.contains('project-card')) {
                     el.classList.add('animate__fadeIn');
+                }
+                else {
+                    console.log(el.dataset.animationtype);
+                    el.classList.add(el.dataset.animationtype);
                 }
             }
         });

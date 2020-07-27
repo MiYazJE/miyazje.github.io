@@ -40,6 +40,36 @@ header {
     cursor: pointer;
     color: white;
 }
+.viewProjects:hover .arrow {
+    transform: rotate(90deg);
+}
+
+.arrow {
+    transition: transform .5s;
+}
+
+#portfolio {
+    display: flex;
+    justify-content: center;
+}
+
+#portfolio a {
+    color: white;
+}
+
+.download-icon {
+    cursor: pointer;
+    width: 25px !important;
+    height: auto;
+    margin: 0px 10px;
+}
+
+.portfolio-icon {
+    cursor: pointer;
+    width: 30px !important;
+    height: auto;
+    margin: 0px 10px;
+}
 
 .presentation-wrap {
     color: white;
@@ -83,8 +113,8 @@ nav ul li:hover {
 }
 
 .navLink {
-    text-decoration: none;
-    color: white;
+    text-decoration: none !important;
+    color: white !important;
     font-weight: bolder;
 }
 
@@ -113,6 +143,7 @@ main {
 }
 
 .project-card {
+    max-height: 500px;
     min-width: 400px;
     width: 90%;
     position: relative;
@@ -124,12 +155,6 @@ main {
     #wrapProjects {
         grid-template-columns: 1fr;
     }
-    /* .project-card:not(:first-child) {
-        margin-top: 20px;
-    }
-    .project-card {
-        width: 70%;
-    } */
 } 
 
 @media (max-width: 1000px) {
@@ -195,6 +220,7 @@ main {
 
 #contact {
     width: 100%;
+    height: 89vh;
     display: flex;
     justify-content: center;
     align-items: center;
