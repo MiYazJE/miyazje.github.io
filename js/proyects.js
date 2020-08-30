@@ -14,7 +14,7 @@ const proyects = [
     {
         name: 'PokeReactive',
         description: 'PokeReactive is a website for searching any pokemon, it uses a public api.',
-        url: 'https://pokereactive.herokuapp.com/',
+        url: 'https://poke-react-fawn.vercel.app/',
         imagePath: '../imgs/pokeReactive.PNG'
     },
 ];
