@@ -8,7 +8,7 @@ const proyects = [
     {
         name: 'Pathfinding',
         description: 'A pathfinding algorithm that search the best route between 2 points (Dijkstra).',
-        url: 'https://maze-pathfinding.herokuapp.com/',
+        url: 'https://pathfinding-visualization.vercel.app/',
         imagePath: '../imgs/pathfinding.PNG'
     },
     {
