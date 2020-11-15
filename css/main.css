@@ -220,6 +220,16 @@ main {
     opacity: 1;
 }
 
+.btnsProject {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.githubBtn {
+    margin-right: 10px;
+}
+
 #contact {
     width: 100%;
     height: 88vh;

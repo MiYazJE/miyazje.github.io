@@ -20,7 +20,10 @@ import { proyects } from './proyects.js';
                 <div class="description">
                     <h1>${proyect.name}</h1>
                     <p>${proyect.description}</p>
-                    <a target="_blank" href="${proyect.url}">Checkout!</a>
+                    <div class="btnsProject">
+                        <a target="_blank" class="githubBtn" href="${proyect.githubUrl}">Github</a>
+                        <a target="_blank" href="${proyect.url}">Project</a>
+                    </div>
                 </div>
             </div>`).join('');
     }
