@@ -11,14 +11,40 @@ import LightModeIcon from './Icons/LightModeIcon.astro';
   <LightModeIcon class="dark:hidden" />
 </button>
 
-<script>
-  document.getElementById('theme-btn')?.addEventListener('click', () => {
-    if (localStorage.theme === 'dark') {
-      localStorage.theme = 'light';
-      document.documentElement.classList.remove('dark');
-    } else {
-      localStorage.theme = 'dark';
-      document.documentElement.classList.add('dark');
+<script is:inline>
+  let remove = null;
+  const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const getThemePreference = () => {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('theme') ?? 'dark';
     }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  };
+
+  const updateTheme = () => {
+    if (remove != null) {
+      remove();
+    }
+    matchMedia.addEventListener('change', updateTheme);
+    remove = () => {
+      matchMedia.removeEventListener('change', updateTheme);
+    };
+
+    const themePreference = getThemePreference();
+    const isDark = themePreference === 'dark';
+
+    document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+  };
+
+  updateTheme();
+
+  document.getElementById('theme-btn')?.addEventListener('click', () => {
+    const newValue = localStorage.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', newValue);
+    updateTheme();
   });
 </script>
