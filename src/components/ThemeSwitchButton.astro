@@ -43,7 +43,8 @@ import LightModeIcon from './Icons/LightModeIcon.astro';
   updateTheme();
 
   document.getElementById('theme-btn')?.addEventListener('click', () => {
-    const newValue = localStorage.theme === 'dark' ? 'light' : 'dark';
+    const newValue =
+      !localStorage.theme || localStorage.theme === 'dark' ? 'light' : 'dark';
     localStorage.setItem('theme', newValue);
     updateTheme();
   });
