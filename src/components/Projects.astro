@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import GithubIcon from './Icons/GithubIcon.astro';
+import ExternalIcon from './Icons/ExternalIcon.astro';
+import CodeIcon from './Icons/CodeIcon.astro';
+
+const projects = await getCollection('projects');
+const data = [...projects.map((p) => p.data)].sort(
+  (a, b) => a.sortOrder - b.sortOrder
+);
+---
+
+<div class="flex flex-col gap-y-[24px] py-[64px]" id="projects">
+  <h2 class="text-3xl font-semibold flex items-center gap-x-3">
+    <CodeIcon />
+    Projects
+  </h2>
+  <div class="flex flex-col gap-y-[48px]">
+    {
+      data.map((item) => {
+        const { title, description, img, tags, urls } = item;
+
+        return (
+          <div class="grid grid-cols-1 md:grid-cols-2 group">
+            <div class="p-[48px] bg-gray-50 dark:bg-dark-gray-200 rounded-tl-lg rounded-tr-lg md:rounded-none md:rounded-tl-lg md:rounded-bl-lg">
+              <img
+                alt={`Foto del proyecto ${title}`}
+                src={img}
+                class="rounded-lg min-h-full object-cover transition-transform group-hover:scale-105 shadow-2xl group-hover:shadow-emerald-500/50"
+              />
+            </div>
+            <div class="p-[24px] dark:bg-dark-gray-100 rounded-bl-lg rounded-br-lg md:rounded-none md:rounded-tr-lg md:rounded-br-lg">
+              <div class="flex flex-col gap-y-[24px]">
+                <span class="font-bold text-xl group-hover:text-emerald-500">
+                  {title}
+                </span>
+                <p class="text-sm">{description}</p>
+                <div class="flex gap-[6px] flex-wrap">
+                  {tags.map((tag) => (
+                    <span class="dark:bg-dark-gray-200 dark:text-dark-gray-600 py-[4px] px-[20px] rounded-3xl text-xs ring-1 ring-dark-gray-200 dark:ring-dark-gray-600">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div class="flex gap-[12px] flex-wrap">
+                  {urls.website ? (
+                    <a title="Go to page" href={urls.website} target="_blank">
+                      <ExternalIcon />
+                    </a>
+                  ) : null}
+                  {urls.github ? (
+                    <a title="Go to Github" href={urls.github} target="_blank">
+                      <GithubIcon class="stroke-gray-900 dark:stroke-dark-gray-600" />
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</div>

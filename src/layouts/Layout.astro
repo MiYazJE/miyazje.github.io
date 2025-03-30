@@ -1,0 +1,97 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body
+    class="bg-[#fffff] dark:bg-[#030712] text-gray-600 dark:text-dark-gray-600 transition-colors duration-300 scroll-m-20 w-full mx-auto container lg:max-w-4xl md:max-w-2xl"
+  >
+    <main class="px-4 flex flex-col gap-y-[96px]">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<script>
+  if (
+    localStorage.theme === 'dark' ||
+    (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+</script>
+
+<style is:global>
+  @font-face {
+    font-family: 'Robot';
+    src: url('/fonts/roboto.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+
+  #header-nav {
+    animation: blur linear both 0.5s;
+    animation-timeline: scroll();
+    animation-range: 0 500px;
+  }
+
+  @keyframes blur {
+    to {
+      backdrop-filter: blur(20px);
+      border-width: 1px;
+      border-color: rgba(0, 0, 0);
+      padding: 0.25rem 0.75rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: rgb(229, 229, 229);
+      border-radius: 9999px;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @keyframes blur {
+      from {
+        border: 0px;
+      }
+      to {
+        box-shadow:
+          0px 5px 50px -5px rgba(0, 0, 0, 0.1),
+          0px 0px 0 1px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(20px);
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+      }
+    }
+  }
+</style>

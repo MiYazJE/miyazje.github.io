@@ -1,0 +1,30 @@
+---
+import ThemeSwitchButton from './ThemeSwitchButton.astro';
+---
+
+<nav
+  class="fixed top-[8px] left-0 z-10 flex items-center justify-center w-full"
+>
+  <ul
+    class="py-5 flex items-center justify-center gap-6 font-semibold text-[16px]"
+    id="header-nav"
+  >
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#">Experience</a></li>
+    <li><div class="h-5 w-px bg-gray-100"></div></li>
+
+    <li class="flex items-center">
+      <ThemeSwitchButton />
+    </li>
+
+    <li>
+      <a href="/public/CV-es.pdf" download>
+        <button
+          type="button"
+          class="py-[2px] px-[8px] rounded-md text-gray-50 bg-emerald-500 shadow-md shadow-emerald-500/20 hover:scale-110 transition"
+          >Download CV</button
+        >
+      </a>
+    </li>
+  </ul>
+</nav>
