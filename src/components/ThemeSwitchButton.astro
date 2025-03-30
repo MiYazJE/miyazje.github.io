@@ -1,0 +1,24 @@
+---
+import DarkModeIcon from './Icons/DarkModeIcon.astro';
+import LightModeIcon from './Icons/LightModeIcon.astro';
+---
+
+<button
+  id="theme-btn"
+  class="rounded-full appearance-none border-none flex hover:scale-125 transition"
+>
+  <DarkModeIcon class="hidden dark:inline" />
+  <LightModeIcon class="dark:hidden" />
+</button>
+
+<script>
+  document.getElementById('theme-btn')?.addEventListener('click', () => {
+    if (localStorage.theme === 'dark') {
+      localStorage.theme = 'light';
+      document.documentElement.classList.remove('dark');
+    } else {
+      localStorage.theme = 'dark';
+      document.documentElement.classList.add('dark');
+    }
+  });
+</script>
