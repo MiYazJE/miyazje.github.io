@@ -5,7 +5,7 @@ description: Pintorrea is a real-time multiplayer drawing game where players can
 urls:
   website: null
   github: https://github.com/MiYazJE/Pintorrea
-img: /images/projects/pintorrea.PNG
+img: /images/projects/pintorrea.webp
 tags:
   - javascript
   - react

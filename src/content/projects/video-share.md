@@ -5,7 +5,7 @@ description: Video Share is an innovative web application that enables users to 
 urls:
   website: https://share-videos.vercel.app/
   github: https://github.com/MiYazJE/Share-Videos
-img: /images/projects/video-share.PNG
+img: /images/projects/video-share.webp
 tags:
   - javascript
   - react

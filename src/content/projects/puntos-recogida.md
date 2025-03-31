@@ -5,7 +5,7 @@ description: Puntos Recogida is a web platform designed to assist those affected
 urls:
   website: https://puntosrecogidavalencia.org/
   github: https://github.com/MiYazJE/centros-recogida-alimentos-valencia
-img: /images/projects/puntos-recogida.PNG
+img: /images/projects/puntos-recogida.webp
 tags:
   - javascript
   - shadcn/ui
