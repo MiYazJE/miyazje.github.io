@@ -1,0 +1,49 @@
+---
+import { getCollection, render } from 'astro:content';
+import SuitCaseIcon from './Icons/SuitCaseIcon.astro';
+
+const experiences = await getCollection('experiences');
+const data = experiences.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const formatter = new Intl.DateTimeFormat('en', {
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<div class="flex flex-col gap-y-[24px]" id="experience">
+  <h2 class="text-3xl font-semibold flex items-center gap-x-3">
+    <SuitCaseIcon />
+    Work Experience
+  </h2>
+  <div class="flex flex-col gap-y-[48px]">
+    {
+      data.map((item) => {
+        const { title, current, date, company, descriptions } = item.data;
+
+        return (
+          <div class="p-[24px] dark:bg-dark-gray-100 rounded-lg shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+            <div class="flex flex-col gap-y-[16px]">
+              <h2 class="text-lg md:text-2xl font-bold text-emerald-500">
+                {company}
+              </h2>
+              <span class="text-xs md:text-sm">
+                {formatter.format(date)} {current ? '- Present' : null}
+              </span>
+              <span class="font-semibold text-md md:text-lg group-hover:text-emerald-500">
+                {title}
+              </span>
+              <ul class="space-y-1 list-disc list-inside ml-[8px] text-sm md:text-md">
+                {descriptions.map((description) => (
+                  <li>{description}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</div>

@@ -10,7 +10,7 @@ const data = [...projects.map((p) => p.data)].sort(
 );
 ---
 
-<div class="flex flex-col gap-y-[24px] pb-20" id="projects">
+<div class="flex flex-col gap-y-[24px]" id="projects">
   <h2 class="text-3xl font-semibold flex items-center gap-x-3">
     <CodeIcon />
     Projects
@@ -21,8 +21,8 @@ const data = [...projects.map((p) => p.data)].sort(
         const { title, description, img, tags, urls } = item;
 
         return (
-          <div class="grid grid-cols-1 lg:grid-cols-2 group">
-            <div class="p-[48px] bg-gray-50 dark:bg-dark-gray-200 rounded-tl-lg rounded-tr-lg lg:rounded-none lg:rounded-tl-lg lg:rounded-bl-lg">
+          <div class="grid grid-cols-1 lg:grid-cols-2 rounded-lg group shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+            <div class="p-[24px] bg-gray-50 dark:bg-dark-gray-200 rounded-tl-lg rounded-tr-lg lg:rounded-none lg:rounded-tl-lg lg:rounded-bl-lg">
               <img
                 alt={`Foto del proyecto ${title}`}
                 src={img}
@@ -31,10 +31,10 @@ const data = [...projects.map((p) => p.data)].sort(
             </div>
             <div class="p-[24px] dark:bg-dark-gray-100 rounded-bl-lg rounded-br-lg lg:rounded-none lg:rounded-tr-lg lg:rounded-br-lg">
               <div class="flex flex-col gap-y-[24px]">
-                <span class="font-bold text-xl group-hover:text-emerald-500">
+                <span class="font-bold text-lg md:text-2xl text-emerald-500">
                   {title}
                 </span>
-                <p class="text-sm">{description}</p>
+                <p class="text-sm md:text-md">{description}</p>
                 <div class="flex gap-[8px] flex-wrap">
                   {tags.map((tag) => (
                     <span class="dark:bg-dark-gray-200 dark:text-dark-gray-600 py-[4px] px-[20px] rounded-3xl text-xs ring-1 ring-dark-gray-200 dark:ring-dark-gray-600">
