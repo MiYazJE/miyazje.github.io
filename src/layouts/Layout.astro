@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description: string;
@@ -12,53 +14,39 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f6fb" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link rel="stylesheet" href="/src/styles/global.css" />
+    <script is:inline>
+      (() => {
+        const requestedTheme = new URLSearchParams(window.location.search).get('theme');
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = requestedTheme === 'light' || requestedTheme === 'dark'
+          ? requestedTheme
+          : savedTheme ?? (prefersDark ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      })();
+    </script>
   </head>
-  <body
-    class="bg-[#fffff] dark:bg-[#030712] text-gray-600 dark:text-dark-gray-600 transition-colors duration-300 scroll-m-20 w-full mx-auto container lg:max-w-5xl md:max-w-2xl"
-  >
-    <main class="px-4 flex flex-col gap-y-[140px] pb-10">
-      <slot />
-    </main>
+  <body>
+    <slot />
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+    </script>
   </body>
 </html>
-
-<style is:global>
-  @font-face {
-    font-family: 'Robot';
-    src: url('/fonts/roboto.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  html,
-  body {
-    padding: 0;
-    margin: 0;
-    scroll-behavior: smooth;
-  }
-
-  #header-nav {
-    animation: blur linear both 0.5s;
-    animation-timeline: scroll();
-    animation-range: 0 200px;
-  }
-
-  @keyframes blur {
-    from {
-      border: 0px;
-    }
-    to {
-      box-shadow:
-        0px 5px 50px -5px rgba(0, 0, 0, 0.1),
-        0px 0px 0 1px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(20px);
-      padding: 0.25rem 0;
-    }
-  }
-</style>

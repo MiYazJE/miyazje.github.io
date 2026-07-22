@@ -6,9 +6,101 @@ import Projects from '../components/Projects.astro';
 import Experiences from '../components/Experiences.astro';
 ---
 
-<Layout title="Rubén Saiz" description="Portfolio de Rubén Saiz Serrano">
+<Layout
+  title="Rubén Saiz — Full-stack Developer"
+  description="Portfolio of Rubén Saiz, a full-stack developer building reliable digital products from interface to infrastructure."
+>
   <Header />
-  <Hero />
-  <Experiences />
-  <Projects />
+  <main id="top">
+    <Hero />
+    <Projects />
+    <Experiences />
+  </main>
+  <footer class="site-footer">
+    <div class="site-shell footer-inner">
+      <div>
+        <p class="eyebrow">Let’s build something useful</p>
+        <p class="footer-title">Have a product or engineering challenge?</p>
+      </div>
+      <div class="footer-actions">
+        <a class="button button-primary" href="https://www.linkedin.com/in/rubensaizs/" target="_blank" rel="noreferrer">
+          Start a conversation <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="button" href="https://github.com/MiYazJE" target="_blank" rel="noreferrer">Explore GitHub</a>
+      </div>
+    </div>
+    <div class="site-shell footer-meta">
+      <span>Rubén Saiz · Full-stack developer</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
 </Layout>
+
+<style>
+  .site-footer {
+    margin-top: 8rem;
+    padding: 5rem 0 2rem;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .footer-title {
+    max-width: 18ch;
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .footer-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+  }
+
+  .footer-meta a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 760px) {
+    .site-footer {
+      margin-top: 6rem;
+      padding-top: 4rem;
+    }
+
+    .footer-inner {
+      display: grid;
+      align-items: start;
+    }
+
+    .footer-actions {
+      display: grid;
+    }
+
+    .footer-meta {
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+  }
+</style>

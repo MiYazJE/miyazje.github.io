@@ -1,6 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
-import SuitCaseIcon from './Icons/SuitCaseIcon.astro';
+import { getCollection } from 'astro:content';
 
 const experiences = await getCollection('experiences');
 const data = experiences.sort(
@@ -8,42 +7,241 @@ const data = experiences.sort(
 );
 
 const formatter = new Intl.DateTimeFormat('en', {
-  month: 'long',
+  month: 'short',
   year: 'numeric',
 });
 ---
 
-<div class="flex flex-col gap-y-[24px]" id="experience">
-  <h2 class="text-3xl font-semibold flex items-center gap-x-3">
-    <SuitCaseIcon />
-    Work Experience
-  </h2>
-  <div class="flex flex-col gap-y-[48px]">
-    {
-      data.map((item) => {
+<section class="section site-shell" id="experience" aria-labelledby="experience-title">
+  <div class="section-heading reveal">
+    <div>
+      <p class="eyebrow">Experience</p>
+      <h2 class="section-title" id="experience-title">Growth through building and leading.</h2>
+    </div>
+    <p class="section-intro">
+      From owning front-end delivery to leading teams across distributed systems, each role has expanded the scope of what I can take from idea to production.
+    </p>
+  </div>
+
+  <div class="experience-grid">
+    <aside class="experience-summary reveal">
+      <span class="summary-number">5+</span>
+      <span class="summary-label">years shaping production software</span>
+      <p>Hands-on across product, engineering and cloud delivery, with a strong focus on maintainable systems.</p>
+    </aside>
+
+    <div class="timeline">
+      {data.map((item, index) => {
         const { title, current, date, company, descriptions } = item.data;
 
         return (
-          <div class="p-[24px] dark:bg-dark-gray-100 rounded-lg shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
-            <div class="flex flex-col gap-y-[16px]">
-              <h2 class="text-lg md:text-2xl font-bold text-emerald-500">
-                {company}
-              </h2>
-              <span class="text-xs md:text-sm">
-                {formatter.format(date)} {current ? '- Present' : null}
-              </span>
-              <span class="font-semibold text-md md:text-lg group-hover:text-emerald-500">
-                {title}
-              </span>
-              <ul class="space-y-1 list-disc list-inside ml-[8px] text-sm md:text-md">
-                {descriptions.map((description) => (
-                  <li>{description}</li>
-                ))}
+          <article class="timeline-item reveal">
+            <div class="timeline-marker">
+              <span>{String(data.length - index).padStart(2, '0')}</span>
+            </div>
+            <div class="timeline-content">
+              <div class="role-heading">
+                <div>
+                  <p class="company">{company}</p>
+                  <h3>{title}</h3>
+                </div>
+                <time datetime={date.toISOString()}>
+                  {formatter.format(date)} — {current ? 'Present' : '2021'}
+                </time>
+              </div>
+              <ul>
+                {descriptions.map((description) => <li>{description}</li>)}
               </ul>
             </div>
-          </div>
+          </article>
         );
-      })
-    }
+      })}
+    </div>
   </div>
-</div>
+</section>
+
+<style>
+  .experience-grid {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.62fr) minmax(0, 1.38fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .experience-summary {
+    position: sticky;
+    top: 8rem;
+    display: grid;
+    padding: 1.8rem;
+    border: 1px solid var(--line);
+    border-radius: 1.25rem;
+    background: var(--surface);
+    box-shadow: 0 18px 55px color-mix(in srgb, var(--ink) 6%, transparent);
+  }
+
+  .summary-number {
+    color: var(--accent);
+    font-size: clamp(4rem, 9vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 0.9;
+  }
+
+  .summary-label {
+    max-width: 12rem;
+    margin-top: 0.8rem;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+
+  .experience-summary p {
+    margin: 2rem 0 0;
+    padding-top: 1.3rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .timeline {
+    position: relative;
+  }
+
+  .timeline::before {
+    position: absolute;
+    top: 1rem;
+    bottom: 1rem;
+    left: 1.1rem;
+    width: 1px;
+    background: var(--line);
+    content: '';
+  }
+
+  .timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.2rem minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .timeline-item + .timeline-item {
+    margin-top: 3.5rem;
+  }
+
+  .timeline-marker {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 2.2rem;
+    height: 2.2rem;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 0.65rem;
+    background: var(--canvas);
+    color: var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+  }
+
+  .timeline-content {
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .role-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .company {
+    margin: 0 0 0.4rem;
+    color: var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+  }
+
+  time {
+    flex: none;
+    padding: 0.32rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 0.4rem;
+    background: var(--surface);
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.58rem;
+  }
+
+  .timeline-content ul {
+    display: grid;
+    gap: 0.65rem;
+    margin: 1.8rem 0 0;
+    padding: 0;
+    color: var(--muted);
+    font-size: 0.86rem;
+    list-style: none;
+  }
+
+  .timeline-content li {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+
+  .timeline-content li::before {
+    position: absolute;
+    top: 0.65rem;
+    left: 0;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--signal);
+    content: '';
+  }
+
+  @media (max-width: 800px) {
+    .experience-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .experience-summary {
+      position: static;
+      grid-template-columns: auto 1fr;
+      align-items: end;
+      gap: 0.6rem 1.5rem;
+    }
+
+    .experience-summary p {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .timeline-item {
+      gap: 1rem;
+    }
+
+    .role-heading {
+      display: grid;
+      gap: 1rem;
+    }
+
+    time {
+      width: fit-content;
+    }
+  }
+</style>

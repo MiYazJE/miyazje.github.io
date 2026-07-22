@@ -1,51 +1,57 @@
----
-import DarkModeIcon from './Icons/DarkModeIcon.astro';
-import LightModeIcon from './Icons/LightModeIcon.astro';
----
-
-<button
-  id="theme-btn"
-  class="rounded-full appearance-none border-none flex hover:scale-125 transition"
->
-  <DarkModeIcon class="hidden dark:inline" />
-  <LightModeIcon class="dark:hidden" />
+<button id="theme-btn" class="theme-button" type="button" aria-label="Switch to dark mode" title="Change colour theme">
+  <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M20.3 15.2A8.5 8.5 0 0 1 8.8 3.7 8.5 8.5 0 1 0 20.3 15.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.8" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+  </svg>
 </button>
 
+<style>
+  .theme-button {
+    display: grid;
+    width: 2.6rem;
+    height: 2.6rem;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: border-color 180ms ease, transform 180ms ease;
+  }
+
+  .theme-button:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .sun,
+  :global(.dark) .moon {
+    display: none;
+  }
+
+  :global(.dark) .sun {
+    display: block;
+  }
+</style>
+
 <script is:inline>
-  let remove = null;
-  const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+  const button = document.getElementById('theme-btn');
 
-  const getThemePreference = () => {
-    if (typeof localStorage !== 'undefined') {
-      return localStorage.getItem('theme') ?? 'dark';
-    }
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+  const syncThemeButton = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    button?.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#080d18' : '#f3f6fb');
   };
 
-  const updateTheme = () => {
-    if (remove != null) {
-      remove();
-    }
-    matchMedia.addEventListener('change', updateTheme);
-    remove = () => {
-      matchMedia.removeEventListener('change', updateTheme);
-    };
+  syncThemeButton();
 
-    const themePreference = getThemePreference();
-    const isDark = themePreference === 'dark';
-
-    document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-  };
-
-  updateTheme();
-
-  document.getElementById('theme-btn')?.addEventListener('click', () => {
-    const newValue =
-      !localStorage.theme || localStorage.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', newValue);
-    updateTheme();
+  button?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    syncThemeButton();
   });
 </script>
