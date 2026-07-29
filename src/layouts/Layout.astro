@@ -1,22 +1,29 @@
 ---
 import '../styles/global.css';
+import type { Language } from '../i18n/ui';
 
 interface Props {
   title: string;
   description: string;
+  language: Language;
 }
 
-const { title, description } = Astro.props;
+const { title, description, language } = Astro.props;
+const alternateLanguage = language === 'en' ? 'es' : 'en';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={language}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f3f6fb" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(`/${language}/`, Astro.site)} />
+    <link rel="alternate" hreflang={language} href={new URL(`/${language}/`, Astro.site)} />
+    <link rel="alternate" hreflang={alternateLanguage} href={new URL(`/${alternateLanguage}/`, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/en/', Astro.site)} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <script is:inline>

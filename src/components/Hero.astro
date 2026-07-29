@@ -1,6 +1,15 @@
 ---
 import GithubIcon from './Icons/GithubIcon.astro';
 import LinkedinIcon from './Icons/LinkedinIcon.astro';
+import type { Language } from '../i18n/ui';
+import { getUi } from '../i18n/ui';
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const t = getUi(language);
 ---
 
 <section class="hero site-shell" aria-labelledby="hero-title">
@@ -8,66 +17,64 @@ import LinkedinIcon from './Icons/LinkedinIcon.astro';
     <div class="identity-row">
       <img src="/images/me.jfif" alt="Rubén Saiz" width="72" height="72" />
       <div>
-        <p class="eyebrow">Full-stack developer</p>
-        <p class="location">Valencia, Spain <span aria-hidden="true">·</span> Building for the web</p>
+        <p class="eyebrow">{t.hero.role}</p>
+        <p class="location">{t.hero.location} <span aria-hidden="true">·</span> {t.hero.locationSuffix}</p>
       </div>
     </div>
 
     <h1 id="hero-title">
-      I build digital products<br />
-      from interface to infrastructure.
+      {t.hero.titleLineOne}<br />
+      {t.hero.titleLineTwo}
     </h1>
 
-    <p class="hero-intro">
-      I turn complex requirements into clear, reliable web applications. My work connects thoughtful React interfaces with scalable Node.js services, cloud infrastructure and clean engineering practices.
-    </p>
+    <p class="hero-intro">{t.hero.intro}</p>
 
     <div class="hero-actions">
-      <a class="button button-primary" href="#projects">View selected work <span class="arrow" aria-hidden="true">↓</span></a>
-      <a class="icon-link" href="https://github.com/MiYazJE" target="_blank" rel="noreferrer" aria-label="Rubén on GitHub">
+      <a class="button button-primary" href="#projects">{t.hero.viewWork} <span class="arrow" aria-hidden="true">↓</span></a>
+      <a class="icon-link" href="https://github.com/MiYazJE" target="_blank" rel="noreferrer" aria-label={t.hero.githubLabel}>
         <GithubIcon />
       </a>
-      <a class="icon-link" href="https://www.linkedin.com/in/rubensaizs/" target="_blank" rel="noreferrer" aria-label="Rubén on LinkedIn">
+      <a class="icon-link" href="https://www.linkedin.com/in/rubensaizs/" target="_blank" rel="noreferrer" aria-label={t.hero.linkedinLabel}>
         <LinkedinIcon />
       </a>
     </div>
 
-    <ul class="capabilities" aria-label="Core capabilities">
-      <li><span>01</span> Product interfaces</li>
-      <li><span>02</span> APIs & services</li>
-      <li><span>03</span> Cloud delivery</li>
+    <ul class="capabilities" aria-label={t.hero.capabilitiesLabel}>
+      {t.hero.capabilities.map((capability, index) => (
+        <li><span>{String(index + 1).padStart(2, '0')}</span> {capability}</li>
+      ))}
     </ul>
   </div>
 
-  <div class="system-card reveal" aria-label="Full-stack system diagram">
+  <div class="system-card reveal" aria-label={t.hero.diagramLabel}>
     <div class="system-toolbar">
       <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
-      <span>product-system.graph</span>
-      <span class="status"><i></i> healthy</span>
+      <span>{t.hero.graphName}</span>
+      <span class="status"><i></i> {t.hero.healthy}</span>
     </div>
 
     <div class="system-canvas">
-      <div class="system-label">Request lifecycle</div>
+      <div class="system-label">{t.hero.requestLifecycle}</div>
       <div class="flow" aria-hidden="true">
         <div class="node node-ui">
-          <small>interface</small>
-          <strong>React UI</strong>
-          <span>user experience</span>
+          <small>{t.hero.interface}</small>
+          <strong>{t.hero.reactUi}</strong>
+          <span>{t.hero.userExperience}</span>
         </div>
         <div class="connector connector-one"><i></i></div>
         <div class="node node-api">
-          <small>gateway</small>
-          <strong>Node API</strong>
-          <span>business logic</span>
+          <small>{t.hero.gateway}</small>
+          <strong>{t.hero.nodeApi}</strong>
+          <span>{t.hero.businessLogic}</span>
         </div>
         <div class="connector connector-two"><i></i></div>
         <div class="node node-data">
-          <small>persistence</small>
-          <strong>Data layer</strong>
-          <span>reliable state</span>
+          <small>{t.hero.persistence}</small>
+          <strong>{t.hero.dataLayer}</strong>
+          <span>{t.hero.reliableState}</span>
         </div>
       </div>
-      <div class="service-note"><span>↳</span> events routed to cloud services</div>
+      <div class="service-note"><span>↳</span> {t.hero.cloudEvents}</div>
       <div class="stack-readout">
         <span>TypeScript</span><span>React</span><span>Node.js</span><span>AWS</span>
       </div>
@@ -425,6 +432,8 @@ import LinkedinIcon from './Icons/LinkedinIcon.astro';
     h1 {
       max-width: 100%;
       font-size: clamp(2.8rem, 14vw, 4rem);
+      hyphens: auto;
+      overflow-wrap: anywhere;
     }
 
     .system-canvas {

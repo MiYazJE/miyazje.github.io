@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "jira-cli": {
+      "source": "Code-and-Sorts/awesome-copilot-agents",
+      "sourceType": "github",
+      "skillPath": "skills/jira-cli/SKILL.md",
+      "computedHash": "10a90b194c4d58021ba975af4eb3d6fe3bbb88a40820047d077fab9930c4b7be"
+    }
+  }
+}

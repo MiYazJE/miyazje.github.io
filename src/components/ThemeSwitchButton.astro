@@ -1,4 +1,24 @@
-<button id="theme-btn" class="theme-button" type="button" aria-label="Switch to dark mode" title="Change colour theme">
+---
+import type { Language } from '../i18n/ui';
+import { getUi } from '../i18n/ui';
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const t = getUi(language);
+---
+
+<button
+  id="theme-btn"
+  class="theme-button"
+  type="button"
+  aria-label={t.header.switchToDark}
+  title={t.header.themeTitle}
+  data-dark-label={t.header.switchToDark}
+  data-light-label={t.header.switchToLight}
+>
   <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path d="M20.3 15.2A8.5 8.5 0 0 1 8.8 3.7 8.5 8.5 0 1 0 20.3 15.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
   </svg>
@@ -43,7 +63,10 @@
 
   const syncThemeButton = () => {
     const isDark = document.documentElement.classList.contains('dark');
-    button?.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    const label = isDark
+      ? button?.dataset.lightLabel
+      : button?.dataset.darkLabel;
+    if (label) button?.setAttribute('aria-label', label);
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#080d18' : '#f3f6fb');
   };
 

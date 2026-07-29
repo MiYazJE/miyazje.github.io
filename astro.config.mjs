@@ -7,4 +7,12 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [react(), tailwind()],
   site: 'https://miyazje.github.io',
+  i18n: {
+    locales: ['en', 'es'],
+    defaultLocale: 'en',
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
+    },
+  },
 });

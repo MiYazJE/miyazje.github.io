@@ -1,12 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
+import type { Language } from '../i18n/ui';
+import { getUi } from '../i18n/ui';
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const t = getUi(language);
 
 const experiences = await getCollection('experiences');
 const data = experiences.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 
-const formatter = new Intl.DateTimeFormat('en', {
+const formatter = new Intl.DateTimeFormat(language, {
   month: 'short',
   year: 'numeric',
 });
@@ -15,24 +24,24 @@ const formatter = new Intl.DateTimeFormat('en', {
 <section class="section site-shell" id="experience" aria-labelledby="experience-title">
   <div class="section-heading reveal">
     <div>
-      <p class="eyebrow">Experience</p>
-      <h2 class="section-title" id="experience-title">Growth through building and leading.</h2>
+      <p class="eyebrow">{t.experience.eyebrow}</p>
+      <h2 class="section-title" id="experience-title">{t.experience.title}</h2>
     </div>
-    <p class="section-intro">
-      From owning front-end delivery to leading teams across distributed systems, each role has expanded the scope of what I can take from idea to production.
-    </p>
+    <p class="section-intro">{t.experience.intro}</p>
   </div>
 
   <div class="experience-grid">
     <aside class="experience-summary reveal">
       <span class="summary-number">5+</span>
-      <span class="summary-label">years shaping production software</span>
-      <p>Hands-on across product, engineering and cloud delivery, with a strong focus on maintainable systems.</p>
+      <span class="summary-label">{t.experience.years}</span>
+      <p>{t.experience.summary}</p>
     </aside>
 
     <div class="timeline">
       {data.map((item, index) => {
-        const { title, current, date, company, descriptions } = item.data;
+        const { current, date, company } = item.data;
+        const title = item.data.title[language];
+        const descriptions = item.data.descriptions[language];
 
         return (
           <article class="timeline-item reveal">
@@ -46,7 +55,7 @@ const formatter = new Intl.DateTimeFormat('en', {
                   <h3>{title}</h3>
                 </div>
                 <time datetime={date.toISOString()}>
-                  {formatter.format(date)} — {current ? 'Present' : '2021'}
+                  {formatter.format(date)} — {current ? t.experience.present : '2021'}
                 </time>
               </div>
               <ul>

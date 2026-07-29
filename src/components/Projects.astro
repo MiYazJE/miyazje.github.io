@@ -2,6 +2,15 @@
 import { getCollection } from 'astro:content';
 import GithubIcon from './Icons/GithubIcon.astro';
 import ExternalIcon from './Icons/ExternalIcon.astro';
+import type { Language } from '../i18n/ui';
+import { getUi } from '../i18n/ui';
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const t = getUi(language);
 
 const projects = await getCollection('projects');
 const data = [...projects.map((project) => project.data)].sort(
@@ -26,17 +35,17 @@ const formatTag = (tag: string) => {
 <section class="section site-shell" id="projects" aria-labelledby="projects-title">
   <div class="section-heading reveal">
     <div>
-      <p class="eyebrow">Selected work</p>
-      <h2 class="section-title" id="projects-title">Products built around real people.</h2>
+      <p class="eyebrow">{t.projects.eyebrow}</p>
+      <h2 class="section-title" id="projects-title">{t.projects.title}</h2>
     </div>
-    <p class="section-intro">
-      A selection of end-to-end products spanning civic response, shared digital experiences and real-time multiplayer systems.
-    </p>
+    <p class="section-intro">{t.projects.intro}</p>
   </div>
 
   <div class="project-list">
     {data.map((item, index) => {
-      const { title, description, img, tags, urls } = item;
+      const { img, tags, urls } = item;
+      const title = item.title[language];
+      const description = item.description[language];
       const projectNumber = String(index + 1).padStart(2, '0');
 
       return (
@@ -47,31 +56,31 @@ const formatTag = (tag: string) => {
                 <span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span>
                 <span>{title.toLowerCase().replaceAll(' ', '-')}.app</span>
               </div>
-              <img src={img} alt={`${title} project interface`} loading="lazy" width="720" height="440" />
+              <img src={img} alt={`${title}: ${t.projects.imageAlt}`} loading="lazy" width="720" height="440" />
             </div>
           </div>
 
           <div class="project-body">
             <div class="project-index">
-              <span>Project / {projectNumber}</span>
-              <span>{index === 0 ? 'Featured' : 'Case study'}</span>
+              <span>{t.projects.project} / {projectNumber}</span>
+              <span>{index === 0 ? t.projects.featured : t.projects.caseStudy}</span>
             </div>
             <h3>{title}</h3>
             <p>{description}</p>
 
-            <ul class="tags" aria-label={`${title} technologies`}>
+            <ul class="tags" aria-label={`${title}: ${t.projects.technologies}`}>
               {tags.map((tag) => <li>{formatTag(tag)}</li>)}
             </ul>
 
             <div class="project-links">
               {urls.website && (
                 <a href={urls.website} target="_blank" rel="noreferrer">
-                  <ExternalIcon /> <span>Visit product</span>
+                  <ExternalIcon /> <span>{t.projects.visitProduct}</span>
                 </a>
               )}
               {urls.github && (
                 <a href={urls.github} target="_blank" rel="noreferrer">
-                  <GithubIcon /> <span>View source</span>
+                  <GithubIcon /> <span>{t.projects.viewSource}</span>
                 </a>
               )}
             </div>
