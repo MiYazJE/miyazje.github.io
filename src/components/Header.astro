@@ -1,26 +1,61 @@
 ---
 import ThemeSwitchButton from './ThemeSwitchButton.astro';
+import type { Language } from '../i18n/ui';
+import { getUi, languageNames, languages } from '../i18n/ui';
+
+interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const t = getUi(language);
 ---
 
 <header class="site-header">
-  <nav class="site-shell nav" aria-label="Primary navigation">
-    <a class="brand" href="#top" aria-label="Rubén Saiz, home">
+  <nav class="site-shell nav" aria-label={t.header.navigationLabel}>
+    <a class="brand" href="#top" aria-label={t.header.homeLabel}>
       <span class="brand-mark" aria-hidden="true">RS</span>
       <span class="brand-copy">
         <strong>Rubén Saiz</strong>
-        <small>Full-stack developer</small>
+        <small>{t.header.role}</small>
       </span>
     </a>
 
     <div class="nav-links">
-      <a href="#projects">Work</a>
-      <a href="#experience">Experience</a>
+      <a href="#projects">{t.header.work}</a>
+      <a href="#experience">{t.header.experience}</a>
     </div>
 
     <div class="nav-actions">
-      <ThemeSwitchButton />
+      <details class="language-menu" data-language-menu>
+        <summary aria-label={t.header.changeLanguage}>
+          <span class="language-code" aria-hidden="true">{language.toUpperCase()}</span>
+          <svg class="language-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="m3 4.5 3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </summary>
+        <div class="language-panel">
+          <p>{t.header.language}</p>
+          <div class="language-options">
+            {languages.map((option) => (
+              <a
+                href={`/${option}/`}
+                data-language-option={option}
+                aria-current={option === language ? 'page' : undefined}
+              >
+                <span class="option-code">{option.toUpperCase()}</span>
+                <span>{languageNames[option]}</span>
+                <svg class="option-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="m3 7 2.5 2.5L11 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      </details>
+      <ThemeSwitchButton language={language} />
       <a class="cv-link" href="/CV-es.pdf" download>
-        <span>Download CV</span>
+        <span>{t.header.downloadCv}</span>
         <svg class="cv-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
           <path d="M14 3v5h5M12 11v6m0 0-2.5-2.5M12 17l2.5-2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -138,6 +173,142 @@ import ThemeSwitchButton from './ThemeSwitchButton.astro';
     gap: 0.65rem;
   }
 
+  .language-menu {
+    position: relative;
+  }
+
+  .language-menu summary {
+    display: inline-grid;
+    min-width: 3.8rem;
+    min-height: 2.6rem;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 180ms ease, transform 180ms ease, background-color 180ms ease;
+  }
+
+  .language-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .language-menu summary:hover,
+  .language-menu[open] summary {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .language-menu[open] summary {
+    background: var(--accent-soft);
+  }
+
+  .language-code {
+    color: var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .language-chevron {
+    transition: transform 180ms ease;
+  }
+
+  .language-menu[open] .language-chevron {
+    transform: rotate(180deg);
+  }
+
+  .language-panel {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    right: 0;
+    width: 12rem;
+    padding: 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 0.9rem;
+    background: color-mix(in srgb, var(--surface) 96%, transparent);
+    box-shadow: 0 20px 55px color-mix(in srgb, var(--ink) 18%, transparent);
+    backdrop-filter: blur(18px);
+    transform-origin: top right;
+    animation: reveal-language-menu 160ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .language-panel > p {
+    margin: 0;
+    padding: 0.35rem 0.55rem 0.5rem;
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .language-options {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .language-options a {
+    display: grid;
+    min-height: 2.8rem;
+    grid-template-columns: 2rem 1fr 1rem;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.6rem;
+    color: var(--ink-soft);
+    font-size: 0.76rem;
+    font-weight: 700;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .language-options a:hover,
+  .language-options a:focus-visible {
+    background: var(--surface-subtle);
+    color: var(--ink);
+  }
+
+  .language-options a[aria-current='page'] {
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
+
+  .option-code {
+    color: var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .option-check {
+    visibility: hidden;
+    color: var(--accent);
+  }
+
+  [aria-current='page'] .option-check {
+    visibility: visible;
+  }
+
+  @keyframes reveal-language-menu {
+    from {
+      opacity: 0;
+      transform: translateY(-0.35rem) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
   .cv-link {
     display: inline-flex;
     min-height: 2.6rem;
@@ -182,6 +353,16 @@ import ThemeSwitchButton from './ThemeSwitchButton.astro';
       padding: 0;
       font-size: 1rem;
     }
+
+    .language-panel {
+      right: -5.85rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .language-panel {
+      animation: none;
+    }
   }
 </style>
 
@@ -190,4 +371,30 @@ import ThemeSwitchButton from './ThemeSwitchButton.astro';
   const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 16);
   updateHeader();
   window.addEventListener('scroll', updateHeader, { passive: true });
+
+  document.querySelectorAll<HTMLDetailsElement>('[data-language-menu]').forEach((menu) => {
+    menu.querySelectorAll<HTMLAnchorElement>('[data-language-option]').forEach((option) => {
+      option.addEventListener('click', (event) => {
+        event.preventDefault();
+        const language = option.dataset.languageOption;
+      if (language !== 'en' && language !== 'es') return;
+
+      localStorage.setItem('language', language);
+      const nextUrl = new URL(`/${language}/`, window.location.origin);
+      nextUrl.search = window.location.search;
+      nextUrl.hash = window.location.hash;
+      window.location.assign(nextUrl);
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!menu.contains(event.target as Node)) menu.removeAttribute('open');
+    });
+
+    menu.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      menu.removeAttribute('open');
+      menu.querySelector('summary')?.focus();
+    });
+  });
 </script>

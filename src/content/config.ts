@@ -1,28 +1,38 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection, z } from 'astro:content';
+
+const localizedText = z.object({
+  en: z.string(),
+  es: z.string(),
+});
+
+const localizedList = z.object({
+  en: z.array(z.string()),
+  es: z.array(z.string()),
+});
 
 const projects = defineCollection({
   schema: z.object({
-    title: z.string(),
+    title: localizedText,
     img: z.string(),
-    description: z.string(),
+    description: localizedText,
     urls: z.object({
       website: z.string().url().nullable(),
       github: z.string().url().nullable(),
     }),
     tags: z.array(z.string()),
-    sortOrder: z.number()
-  })
-})
+    sortOrder: z.number(),
+  }),
+});
 
 const experiences = defineCollection({
   schema: z.object({
     company: z.string(),
-    title: z.string(),
+    title: localizedText,
     current: z.boolean().default(false),
     date: z.date(),
-    descriptions: z.array(z.string())
-  })
-})
+    descriptions: localizedList,
+  }),
+});
 
 
-export const collections = { projects, experiences }
+export const collections = { projects, experiences };
